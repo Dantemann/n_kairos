@@ -1,22 +1,20 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-
 import { DatabaseModule } from '@app/common/modules/database/database.module';
-
-import { ENotificationSmsProviders, ECredentialType } from './enums/notifications.enum';
-import { SmsCredentialsRepository } from './repositories/sms/smsCredential.repository';
-import { TwilioSmsCredentialRepository } from './repositories/sms/twilioSmsCredentialRepository.repository';
+import { TwilioSmsCredentialRepository } from './repositories/notifications/sms/twilioSmsCredentialRepository.repository';
 import { CredentialsSchema } from './schemas/credentials.schema';
-import { TwilioSmsCredentialsSchema } from './schemas/sms/twilioSmsCredentials.schema';
+import { CCollectionName } from './constants/collection.constant';
+import { ECredentials } from './enums/credentials.enum';
+import { TwilioSmsCredentialsSchema } from './schemas/notifications/sms/twilioSmsCredentials.schema';
 
 @Module({
   imports: [
     DatabaseModule,
     MongooseModule.forFeature([
       {
-        name: "credentials", schema: CredentialsSchema, discriminators: [
+        name: CCollectionName, schema: CredentialsSchema, discriminators: [
           {
-            name: `credentials_${ENotificationSmsProviders.Twilio}`,
+            name: `${CCollectionName}_${ECredentials.Twilio_SMS}`,
             schema: TwilioSmsCredentialsSchema
           }
         ] 
@@ -25,11 +23,9 @@ import { TwilioSmsCredentialsSchema } from './schemas/sms/twilioSmsCredentials.s
   ],
   controllers: [],
   providers: [
-    SmsCredentialsRepository,
     TwilioSmsCredentialRepository
   ],
   exports: [
-    SmsCredentialsRepository,
     TwilioSmsCredentialRepository
   ]
 })

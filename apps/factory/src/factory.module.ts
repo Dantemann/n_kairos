@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CredentialsModule } from 'apps/credentials/src/credentials.module';
-import { FactoryService } from './factory.service';
+import { SuperFactoryService } from './superFactory.service';
+import { MessagingFactorySercice } from './messagingFactory.service';
 
 @Module({
   imports: [
@@ -8,10 +9,12 @@ import { FactoryService } from './factory.service';
   ],
   controllers: [],
   providers: [
-    FactoryService
+    SuperFactoryService,
+    MessagingFactorySercice
   ],
   exports: [
-    FactoryService
+    SuperFactoryService,
+    MessagingFactorySercice
   ]
 })
 export class FactoryModule {}

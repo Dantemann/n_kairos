@@ -1,7 +1,9 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { CredentialsModule } from 'apps/credentials/src/credentials.module';
+import { EFactoryType } from 'apps/factory/src/enums/factoryTypes.enum';
+import { EMessagingProviders, EMessagingSmsProviderChannels } from 'apps/factory/src/enums/messagingProviders.enum';
 import { FactoryModule } from 'apps/factory/src/factory.module';
-import { FactoryService } from 'apps/factory/src/factory.service';
+import { SuperFactoryService } from 'apps/factory/src/superFactory.service';
 
 @Module({
   imports: [
@@ -13,14 +15,17 @@ import { FactoryService } from 'apps/factory/src/factory.service';
 })
 export class AppModule implements OnModuleInit {
   constructor(
-    private readonly __factorySvc: FactoryService
+    private readonly __superFactory: SuperFactoryService
   ) {}
 
   async onModuleInit() {
-    // const provider = await this.__factorySvc.getFactory('SMS')
-    // await provider.sendMessage({
-    //   message: "Test",
-    //   to: "0981241848"
-    // });
+    const factory = await this.__superFactory.getFactory(EFactoryType.Messaging);
+    const provider = await factory.getProvider(EMessagingProviders.SMS, EMessagingSmsProviderChannels.Twilio);
+
+    await provider.sendMessage({
+      message: "Test",
+      target: EMessagingProviders.SMS,
+      to: "0981241848"
+    })
   }
 }

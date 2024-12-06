@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { ECredentials } from "../../../enums/credentials.enum";
+import { CredentialsAbstractDocument } from "../../credentials.schema";
+import { CCollectionName } from "apps/credentials/src/constants/collection.constant";
 
-import { CredentialsAbstractDocument } from "../credentials.schema";
-import { ENotificationSmsProviders, ECredentialType } from "../../enums/notifications.enum";
 
-@Schema({ collection: `credentials_${ENotificationSmsProviders.Twilio}`, versionKey: false, discriminatorKey: ENotificationSmsProviders.Twilio})
+@Schema({ collection: `${CCollectionName}`, versionKey: false, discriminatorKey: ECredentials.Twilio_SMS})
 export class TwilioSmsCredentialsDocument extends CredentialsAbstractDocument {
     @Prop({ type: String, required: true})
     SID: string;
