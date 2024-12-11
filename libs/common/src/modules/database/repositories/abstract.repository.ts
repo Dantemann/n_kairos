@@ -20,7 +20,7 @@ export abstract class AbstractRepository<TDocument> extends AbstractDocument {
         return (await createdDocument.save()).toJSON() as TDocument;
     }
 
-    async find(filterQuery: FilterQuery<TDocument>): Promise<TDocument[]> {
+    async find(filterQuery: FilterQuery<TDocument> = {}): Promise<TDocument[]> {
         return this.model.find(filterQuery).lean<TDocument[]>(true);
     }
 

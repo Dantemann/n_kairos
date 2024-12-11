@@ -34,15 +34,6 @@
       "compilerOptions": {
         "tsConfigPath": "apps/credentials/tsconfig.app.json"
       }
-    },
-    "factory": {
-      "type": "application",
-      "root": "apps/factory",
-      "entryFile": "main",
-      "sourceRoot": "apps/factory/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/factory/tsconfig.app.json"
-      }
     }
   },
   "monorepo": true,
