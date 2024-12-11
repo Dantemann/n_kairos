@@ -2,15 +2,14 @@ import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ECollectionNames } from "@app/common/enums/collectionNames.enum";
 import { DatabaseModule } from "@app/common/modules/database/database.module";
-import { MessagingCredentialsService } from "./services/messagingCredentials.service";
 import { TwilioSmsCredentialService } from "./services/twilioSmsCredential.service";
 import { TwilioSmsCredentialsSchema } from "./schemas/sms/twilioSms.schema";
 import { CredentialsSchema } from "../../schemas/credentials.schema";
 import { ECredentialsNames } from "../../enums/credentials.enum";
-import { TwilioSmsCredentialRepository } from "./repositories/twilioSmsCredential.repository";
 import { VonageSmsCredentialService } from "./services/vonageSmsCredential.service";
-import { VonageSmsCredentialRepository } from "./repositories/vonageSmsCredential.repository";
 import { VonageSmsCredentialsSchema } from "./schemas/sms/vonageSms.schema";
+import { MessagingCredentialsService } from "../services/messagingCredentials.service";
+import { MessagingSmsCredentialsService } from "./services/messagingSmsCredentials.service";
 
 @Module({
     imports: [
@@ -33,12 +32,10 @@ import { VonageSmsCredentialsSchema } from "./schemas/sms/vonageSms.schema";
     ],
     providers: [
         MessagingCredentialsService,
-
+        
+        MessagingSmsCredentialsService,
         TwilioSmsCredentialService,
-        TwilioSmsCredentialRepository,
-
         VonageSmsCredentialService,
-        VonageSmsCredentialRepository
     ],
     exports: [
         MessagingCredentialsService

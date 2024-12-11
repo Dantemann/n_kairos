@@ -5,7 +5,7 @@ import { ECredentialsTypes } from "./enums/credentials.enum";
 import { ICredentialsServices } from "./interfaces/credentialsService.interface";
 import { CredentialsAbstractDocument } from "./schemas/credentials.schema";
 import { CredentialsRepository } from "./credentials.repository";
-import { MessagingCredentialsService } from "./modules/messaging/services/messagingCredentials.service";
+import { MessagingCredentialsService } from "./modules/services/messagingCredentials.service";
 
 @Injectable()
 export class CredentialsService {
