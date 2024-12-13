@@ -8,7 +8,7 @@ import { TwilioSmsCredentialService } from "./twilioSmsCredential.service";
 import { VonageSmsCredentialService } from "./vonageSmsCredential.service";
 
 @Injectable()
-export class MessagingSmsCredentialsService implements CredentialAbstractService<CredentialsAbstractDocument> {
+export class MessagingSmsCredentialsService implements CredentialAbstractService {
     constructor(
         private readonly __twilioSmsCredentialsService: TwilioSmsCredentialService,
         private readonly __vonageSmsCredentialService: VonageSmsCredentialService
@@ -16,14 +16,14 @@ export class MessagingSmsCredentialsService implements CredentialAbstractService
 
     async createCredentials(body: CreateCredentialsDto): Promise<CredentialsAbstractDocument> {
         const validMessagingDto = await CreateMessagingCredentialDto.allocNew(body.credential);
-        let service: CredentialAbstractService = this.__smsChannelServices?.[validMessagingDto.channel]??null;
+        let service: CredentialAbstractService<CreateMessagingCredentialDto> = this.__smsChannelServices?.[validMessagingDto.channel]??null;
 
         if(!service) throw new BadRequestException(`El canal "${validMessagingDto.channel}" no es valido para ${validMessagingDto.target}`);
 
-        return await service.createCredentials(body);
+        return await service.createCredentials(validMessagingDto);
     }
 
-    private __smsChannelServices: ICredentialsServices = {
+    private __smsChannelServices: ICredentialsServices<CreateMessagingCredentialDto> = {
         [EMessagingChannels.Twilio]: this.__twilioSmsCredentialsService,
         [EMessagingChannels.Vonage]: this.__vonageSmsCredentialService
     }

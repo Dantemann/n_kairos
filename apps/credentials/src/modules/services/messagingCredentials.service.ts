@@ -7,7 +7,7 @@ import { CredentialAbstractService } from "../../interfaces/credentialsService.i
 import { MessagingSmsCredentialsService } from "../messaging/services/messagingSmsCredentials.service";
 
 @Injectable()
-export class MessagingCredentialsService implements CredentialAbstractService<CredentialsAbstractDocument> {
+export class MessagingCredentialsService implements CredentialAbstractService {
     constructor(
         private readonly __messagingSmsCredentialsService: MessagingSmsCredentialsService
     ) {}

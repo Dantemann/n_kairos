@@ -13,7 +13,7 @@ import { ECredentialsNames, ECredentialsTypes } from "../../../enums/credentials
 import { EMessagingChannels, EMessagingTargets } from "../enums/messaging.enum";
 
 @Injectable()
-export class TwilioSmsCredentialService extends AbstractRepository<TwilioSmsCredentialDocument> implements CredentialAbstractService {
+export class TwilioSmsCredentialService extends AbstractRepository<TwilioSmsCredentialDocument> implements CredentialAbstractService<CreateMessagingCredentialDto> {
     protected _logger: Logger = new Logger(TwilioSmsCredentialService.name);
 
     constructor(
@@ -29,9 +29,8 @@ export class TwilioSmsCredentialService extends AbstractRepository<TwilioSmsCred
         type: ECredentialsTypes.Messaging
     }
 
-    async createCredentials(body: CreateCredentialsDto): Promise<CredentialsAbstractDocument> {
-        const credentialData = body.credential as CreateMessagingCredentialDto;
-        const dto = await CreateTwilioSmsCredentials.allocNew(credentialData.params);
+    async createCredentials(body: CreateMessagingCredentialDto): Promise<CredentialsAbstractDocument> {
+        const dto = await CreateTwilioSmsCredentials.allocNew(body.params);
 
         return await this.create({
             phoneNumber: dto.phoneNumber,

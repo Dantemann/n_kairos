@@ -13,7 +13,7 @@ import { EMessagingChannels, EMessagingTargets } from "../enums/messaging.enum";
 import { ECredentialsNames, ECredentialsTypes } from "../../../enums/credentials.enum";
 
 @Injectable()
-export class VonageSmsCredentialService extends AbstractRepository<VonageSmsCredentialDocument> implements CredentialAbstractService {
+export class VonageSmsCredentialService extends AbstractRepository<VonageSmsCredentialDocument> implements CredentialAbstractService<CreateMessagingCredentialDto> {
     protected _logger: Logger = new Logger(VonageSmsCredentialService.name);
 
     constructor(
@@ -29,9 +29,8 @@ export class VonageSmsCredentialService extends AbstractRepository<VonageSmsCred
         type: ECredentialsTypes.Messaging
     }
 
-    async createCredentials(body: CreateCredentialsDto): Promise<CredentialsAbstractDocument> {
-        const credentialData = body.credential as CreateMessagingCredentialDto;
-        const dto = await CreateVonageSmsCredentials.allocNew(credentialData.params);
+    async createCredentials(body: CreateMessagingCredentialDto): Promise<CredentialsAbstractDocument> {
+        const dto = await CreateVonageSmsCredentials.allocNew(body.params);
 
         return await this.create({
             secret: dto.secret,
